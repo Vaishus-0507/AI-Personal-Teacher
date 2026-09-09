@@ -121,17 +121,38 @@ function App() {
       }))
     }
   }
+function handleMarkChange(e) {
+  const { name, value } = e.target
 
-  function handleMarkChange(e) {
-    const { name, value } = e.target
-
-    if (value === '' || (Number(value) >= 0 && Number(value) <= 100)) {
-      setStudent(prev => ({
-        ...prev,
-        [name]: value
-      }))
-    }
+  if (value === '') {
+    setStudent(prev => ({
+      ...prev,
+      [name]: value
+    }))
+    setError('')
+    return
   }
+
+  const marks = Number(value)
+
+  if (marks > 100) {
+    setError('⚠️ Marks cannot be greater than 100.')
+    return
+  }
+
+  if (marks < 0) {
+    setError('⚠️ Marks cannot be less than 0.')
+    return
+  }
+
+  setStudent(prev => ({
+    ...prev,
+    [name]: value
+  }))
+
+  setError('')
+}
+  
 
   async function analyzePerformance(e) {
     e.preventDefault()
@@ -201,7 +222,7 @@ function App() {
 
     try {
       const response = await fetch(
-        'https://focuses-encounter-legend-stay.trycloudflare.com/webhook/61244675-6ae6-42aa-9228-60ba21ddf6ad',
+        'https://skills-diploma-social-corners.trycloudflare.com/webhook/61244675-6ae6-42aa-9228-60ba21ddf6ad',
         {
           method: 'POST',
           headers: {
@@ -361,13 +382,18 @@ function downloadStudyPlan() {
               <div>
                 <label>Student Name</label>
 
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Enter your name"
-                  value={student.name}
-                  onChange={handleChange}
-                />
+               <input
+  type="text"
+  name="name"
+  placeholder="Enter your name"
+  value={student.name}
+  onChange={handleChange}
+  style={{
+    color: '#111827',
+    backgroundColor: '#ffffff',
+    fontWeight: '500'
+  }}
+/>
               </div>
 
               <div>
@@ -449,15 +475,19 @@ function downloadStudyPlan() {
 
                   <label>{subject.name}</label>
 
-                  <input
-                    type="number"
-                    name={subject.key}
-                    min="0"
-                    max="100"
-                    placeholder="Marks / 100"
-                    value={student[subject.key]}
-                    onChange={handleMarkChange}
-                  />
+                 <input
+  type="number"
+  name={subject.key}
+  min="0"
+  placeholder="Marks / 100"
+  value={student[subject.key]}
+  onChange={handleMarkChange}
+  style={{
+    color: '#111827',
+    backgroundColor: '#ffffff',
+    fontWeight: '500'
+  }}
+/>
 
                 </div>
               ))}
@@ -756,29 +786,32 @@ function downloadStudyPlan() {
 
                 </div>
               )}
+{result.studyPlanText && (
+  <div className="plan">
+    <h3>📚 Your Personalized Study Plan</h3>
 
-            {result.studyPlanText && (
+    <div className="study-plan-card">
+      <div className="plan-header">
+        <h4>📋 Your Weekly Study Plan</h4>
+        <p>
+          Follow this plan consistently to improve your weak areas.
+        </p>
+      </div>
 
-              <div className="plan">
-
-                <h3>
-                  📚 Your Personalized Study Plan
-                </h3>
-
-                <pre
-                  style={{
-                    whiteSpace: 'pre-wrap',
-                    fontFamily: 'inherit',
-                    lineHeight: '1.7'
-                  }}
-                >
-                  {result.studyPlanText}
-                </pre>
-
-              </div>
-            )}
-
-            {result.analysis &&
+      <div className="plan-content">
+        <p
+          style={{
+            whiteSpace: 'pre-wrap',
+            lineHeight: '1.7'
+          }}
+        >
+          {result.studyPlanText}
+        </p>
+      </div>
+    </div>
+  </div>
+)}
+          {result.analysis &&
               result.analysis.motivationalNote && (
 
                 <div className="motivation">
