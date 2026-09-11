@@ -222,7 +222,7 @@ function handleMarkChange(e) {
 
     try {
       const response = await fetch(
-        'https://uri-appeals-raise-assure.trycloudflare.com/webhook/61244675-6ae6-42aa-9228-60ba21ddf6adS',
+        'https://uri-appeals-raise-assure.trycloudflare.com/webhook/61244675-6ae6-42aa-9228-60ba21ddf6ad',
         {
           method: 'POST',
           headers: {
