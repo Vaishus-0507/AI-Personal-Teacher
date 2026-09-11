@@ -694,28 +694,3 @@ select:focus {
   padding-left: 20px;
   line-height: 1.7;
 }
-{result.studyPlanText && (
-  <div className="plan">
-    <h3>📚 Your Personalized Study Plan</h3>
-
-    <div className="study-plan-card">
-      <div className="plan-header">
-        <h4>📋 Your Weekly Study Plan</h4>
-        <p>
-          Follow this plan consistently to improve your weak areas.
-        </p>
-      </div>
-
-      <div className="plan-content">
-        <p
-          style={{
-            whiteSpace: 'pre-wrap',
-            lineHeight: '1.7'
-          }}
-        >
-          {result.studyPlanText}
-        </p>
-      </div>
-    </div>
-  </div>
-)}
