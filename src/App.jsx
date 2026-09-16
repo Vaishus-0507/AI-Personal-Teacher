@@ -222,7 +222,7 @@ function handleMarkChange(e) {
 
     try {
       const response = await fetch(
-        'https://uri-appeals-raise-assure.trycloudflare.com/webhook/61244675-6ae6-42aa-9228-60ba21ddf6ad',
+        'https://impose-bring-charleston-rated.trycloudflare.com/webhook/61244675-6ae6-42aa-9228-60ba21ddf6ad',
         {
           method: 'POST',
           headers: {
@@ -599,32 +599,21 @@ function downloadStudyPlan() {
 
               <h3>
                 📊 Subject-wise Performance
-                {badges.length > 0 && (
+               {badges.length > 0 && (
   <div className="result-section">
-
-    <h3>
-      🏆 Your Achievements
-    </h3>
+    <h3>🏆 Your Achievements</h3>
 
     <div className="target-grid">
-
       {badges.map((badge, index) => (
         <div
           className="target-card"
           key={index}
         >
-          <h4>
-            {badge}
-          </h4>
-
-          <p>
-            Keep learning and improving!
-          </p>
+          <h4>{badge}</h4>
+          <p>Keep learning and improving!</p>
         </div>
       ))}
-
     </div>
-
   </div>
 )}
               </h3>
