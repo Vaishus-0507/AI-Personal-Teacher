@@ -222,7 +222,7 @@ function handleMarkChange(e) {
 
     try {
       const response = await fetch(
-        'https://bras-concrete-lobby-imagination.trycloudflare.com/webhook/61244675-6ae6-42aa-9228-60ba21ddf6ad',
+        'https://tend-thrown-dollars-aerial.trycloudflare.com/webhook/61244675-6ae6-42aa-9228-60ba21ddf6ad',
         {
           method: 'POST',
           headers: {
@@ -709,9 +709,9 @@ function downloadStudyPlan() {
                 </div>
               )}
 
-            {result.analysis &&
-              result.analysis.focusSubjects &&
-              result.analysis.focusSubjects.length > 0 && (
+           {result.recommendation &&
+              result.recommendation.focusSubjects &&
+              result.recommendation.focusSubjects.length > 0 && (
 
                 <div className="result-section">
 
@@ -721,7 +721,7 @@ function downloadStudyPlan() {
 
                   <div className="target-grid">
 
-                    {result.analysis.focusSubjects.map(
+                    {result.recommendation.focusSubjects.map(
                       (item, index) => (
 
                         <div
@@ -770,18 +770,17 @@ function downloadStudyPlan() {
                 </div>
               )}
 
-            {result.analysis &&
-              result.analysis.summary && (
+            {result.recommendation &&
+              result.recommendation.summary && (
 
                 <div className="plan">
 
                   <h3>
-                    💡 Personalized Performance
-                    Insight
+                    💡 Personalized Performance Insight
                   </h3>
 
                   <p>
-                    {result.analysis.summary}
+                    {result.recommendation.summary}
                   </p>
 
                 </div>
