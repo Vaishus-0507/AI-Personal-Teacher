@@ -222,7 +222,7 @@ function handleMarkChange(e) {
 
     try {
       const response = await fetch(
-        'https://instant-hiking-gateway-additions.trycloudflare.com/webhook/61244675-6ae6-42aa-9228-60ba21ddf6ad',
+        'https://bras-concrete-lobby-imagination.trycloudflare.com/webhook/61244675-6ae6-42aa-9228-60ba21ddf6ad',
         {
           method: 'POST',
           headers: {
@@ -236,12 +236,22 @@ function handleMarkChange(e) {
         throw new Error('Unable to connect to the learning system.')
       }
 
-      const data = await response.json()
+     const data = await response.json()
 
-      setResult({
-        ...data,
-        submittedSubjects: subjectData
-      })
+const normalizedResult = {
+  ...data,
+  submittedSubjects: subjectData,
+
+  analysis: {
+    ...(data.analysis || {}),
+    weeklyStudyPlan:
+      data.analysis?.weeklyStudyPlan ||
+      data.weeklyStudyPlan ||
+      []
+  }
+}
+
+setResult(normalizedResult)
     } catch (err) {
       setError(
         'Unable to connect to the personalized learning system. Please make sure n8n is running.'
@@ -598,8 +608,10 @@ function downloadStudyPlan() {
             <div className="result-section">
 
               <h3>
-                📊 Subject-wise Performance
-               {badges.length > 0 && (
+  📊 Subject-wise Performance
+</h3>
+
+{badges.length > 0 && (
   <div className="result-section">
     <h3>🏆 Your Achievements</h3>
 
@@ -616,9 +628,8 @@ function downloadStudyPlan() {
     </div>
   </div>
 )}
-              </h3>
 
-              <div className="performance-list">
+<div className="performance-list">
 
                 {subjects.map((subject, index) => {
 
@@ -775,46 +786,106 @@ function downloadStudyPlan() {
 
                 </div>
               )}
-{result.studyPlanText && (
+{result.recommendation?.weeklyStudyPlan?.length > 0 && (
   <div className="plan">
-    <h3>📚 Your Personalized Study Plan</h3>
 
-    <div className="study-plan-card">
-      <div className="plan-header">
-        <h4>📋 Your Weekly Study Plan</h4>
+    <div className="study-plan-title">
+      <div>
+        <h3>📚 Your Personalized Study Plan</h3>
         <p>
-          Follow this plan consistently to improve your weak areas.
+          Small steps every day = Big results tomorrow ✨
         </p>
       </div>
 
-      <div className="plan-content">
-        <p
-          style={{
-            whiteSpace: 'pre-wrap',
-            lineHeight: '1.7'
-          }}
-        >
-          {result.studyPlanText}
+      <div className="plan-goal">
+        🎯
+        <div>
+          <strong>Your Goal</strong>
+          <span>Improve weak subjects & reach your target score</span>
+        </div>
+      </div>
+    </div>
+
+    <div className="weekly-plan-grid">
+
+   {(result.recommendation?.weeklyStudyPlan || []).map((day, index) => {
+        const icons = [
+          '📐',
+          '🔬',
+          '📖',
+          '🧪',
+          '🌍',
+          '📚',
+          '🔄'
+        ]
+
+        return (
+          <div
+            className={`day-card day-${index + 1}`}
+            key={index}
+          >
+
+            <div className="day-header">
+              <span className="day-number">
+                {day.day}
+              </span>
+
+              <span className="day-label">
+                {index === 0
+                  ? '(Today)'
+                  : index === 1
+                  ? '(Tomorrow)'
+                  : ''}
+              </span>
+            </div>
+
+            <div className="day-content">
+
+              <div className="subject-icon">
+                {icons[index]}
+              </div>
+
+              <h4>{day.focus}</h4>
+
+              <div className="study-time">
+                ⏱️ 1.5–2.5 hours
+              </div>
+
+              <div className="task-list">
+                {day.tasks.map((task, taskIndex) => (
+                  <div
+                    className="study-task"
+                    key={taskIndex}
+                  >
+                    <span>✓</span>
+                    <p>{task}</p>
+                  </div>
+                ))}
+              </div>
+
+            </div>
+
+          </div>
+        )
+      })}
+
+    </div>
+
+    <div className="study-motivation">
+      <div className="motivation-icon">🌱</div>
+
+      <div>
+        <strong>Stay focused and keep going!</strong>
+
+        <p>
+          {result.recommendation?.motivationalNote ||
+  'Every small improvement matters. Stay consistent and keep learning.'}
         </p>
       </div>
     </div>
+
   </div>
 )}
-          {result.analysis &&
-              result.analysis.motivationalNote && (
-
-                <div className="motivation">
-
-                  <h3>
-                    💪 Keep Going!
-                  </h3>
-
-                  <p>
-                    {result.analysis.motivationalNote}
-                  </p>
-
-                </div>
-              )}
 
           </section>
         )}
