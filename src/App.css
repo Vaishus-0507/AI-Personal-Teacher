@@ -1022,3 +1022,101 @@ select:focus {
     grid-template-columns: 1fr;
   }
 }
+/* ===== Recommended Study Resources ===== */
+
+.study-resources {
+  margin-top: 24px;
+  padding: 24px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #f5f3ff, #eef2ff);
+  border: 1px solid #ddd6fe;
+}
+
+.study-resources h3 {
+  margin: 0 0 8px;
+  color: #312e81;
+  font-size: 21px;
+}
+
+.resources-subtitle {
+  margin: 0 0 18px;
+  color: #667085;
+  font-size: 14px;
+}
+
+.resources-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.resource-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  border-radius: 15px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  text-decoration: none;
+  box-shadow: 0 3px 12px rgba(15, 23, 42, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.resource-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.10);
+}
+
+.resource-icon {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: #eef2ff;
+  font-size: 21px;
+}
+
+.resource-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.resource-info h4 {
+  margin: 0 0 5px;
+  color: #1e1b4b;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.resource-info span {
+  color: #667085;
+  font-size: 12px;
+}
+
+.resource-arrow {
+  color: #4f46e5;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.no-resources {
+  margin: 0;
+  color: #667085;
+  font-size: 14px;
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+  .resources-list {
+    grid-template-columns: 1fr;
+  }
+
+  .study-resources {
+    padding: 18px;
+  }
+}

@@ -38,45 +38,55 @@ function App() {
     { key: 'hindi', name: 'Hindi' }
   ]
 
-  const class12Subjects = {
-    Science: {
-      PCM: [
-        { key: 'physics', name: 'Physics' },
-        { key: 'chemistry', name: 'Chemistry' },
-        { key: 'math', name: 'Mathematics' },
-        { key: 'english', name: 'English' }
-      ],
-      PCB: [
-        { key: 'physics', name: 'Physics' },
-        { key: 'chemistry', name: 'Chemistry' },
-        { key: 'biology', name: 'Biology' },
-        { key: 'english', name: 'English' }
-      ],
-      PCMB: [
-        { key: 'physics', name: 'Physics' },
-        { key: 'chemistry', name: 'Chemistry' },
-        { key: 'math', name: 'Mathematics' },
-        { key: 'biology', name: 'Biology' },
-        { key: 'english', name: 'English' }
-      ]
-    },
-
-    Commerce: [
-      { key: 'accountancy', name: 'Accountancy' },
-      { key: 'businessStudies', name: 'Business Studies' },
-      { key: 'economics', name: 'Economics' },
-      { key: 'english', name: 'English' },
-      { key: 'math', name: 'Mathematics' }
+ const class12Subjects = {
+  Science: {
+    PCM: [
+      { key: 'physics', name: 'Physics' },
+      { key: 'chemistry', name: 'Chemistry' },
+      { key: 'math', name: 'Mathematics' },
+      { key: 'english', name: 'English' }
     ],
 
-    Humanities: [
-      { key: 'history', name: 'History' },
-      { key: 'geography', name: 'Geography' },
-      { key: 'politicalScience', name: 'Political Science' },
-      { key: 'english', name: 'English' },
-      { key: 'economics', name: 'Economics' }
+    PCB: [
+      { key: 'physics', name: 'Physics' },
+      { key: 'chemistry', name: 'Chemistry' },
+      { key: 'biology', name: 'Biology' },
+      { key: 'english', name: 'English' }
+    ],
+
+    PCMB: [
+      { key: 'physics', name: 'Physics' },
+      { key: 'chemistry', name: 'Chemistry' },
+      { key: 'math', name: 'Mathematics' },
+      { key: 'biology', name: 'Biology' },
+      { key: 'english', name: 'English' }
     ]
-  }
+  },
+
+  Commerce: [
+    { key: 'accountancy', name: 'Accountancy' },
+    { key: 'businessStudies', name: 'Business Studies' },
+    { key: 'economics', name: 'Economics' },
+    { key: 'english', name: 'English' },
+    { key: 'math', name: 'Mathematics' }
+  ],
+
+  Humanities: [
+    { key: 'history', name: 'History' },
+    { key: 'geography', name: 'Geography' },
+    { key: 'politicalScience', name: 'Political Science' },
+    { key: 'english', name: 'English' },
+    { key: 'economics', name: 'Economics' }
+  ],
+
+  ComputerScience: [
+    { key: 'computerScience', name: 'Computer Science' },
+    { key: 'math', name: 'Mathematics' },
+    { key: 'physics', name: 'Physics' },
+    { key: 'chemistry', name: 'Chemistry' },
+    { key: 'english', name: 'English' }
+  ]
+}
 
   function getSubjects() {
     if (student.class === '10') {
@@ -94,6 +104,9 @@ function App() {
     if (student.stream === 'Humanities') {
       return class12Subjects.Humanities
     }
+    if (student.stream === 'ComputerScience') {
+  return class12Subjects.ComputerScience
+}
 
     return []
   }
@@ -222,7 +235,7 @@ function handleMarkChange(e) {
 
     try {
       const response = await fetch(
-        'https://tend-thrown-dollars-aerial.trycloudflare.com/webhook/61244675-6ae6-42aa-9228-60ba21ddf6ad',
+        'https://counters-attitude-survival-affairs.trycloudflare.com/webhook/61244675-6ae6-42aa-9228-60ba21ddf6ad',
         {
           method: 'POST',
           headers: {
@@ -242,10 +255,17 @@ const normalizedResult = {
   ...data,
   submittedSubjects: subjectData,
 
+  studyResources:
+    data.studyResources ||
+    data.recommendation?.studyResources ||
+    data.output?.studyResources ||
+    [],
+
   analysis: {
     ...(data.analysis || {}),
     weeklyStudyPlan:
       data.analysis?.weeklyStudyPlan ||
+      data.recommendation?.weeklyStudyPlan ||
       data.weeklyStudyPlan ||
       []
   }
@@ -446,6 +466,7 @@ function downloadStudyPlan() {
                     <option value="Humanities">
                       Humanities
                     </option>
+                    <option value="ComputerScience">Computer Science</option>
                   </select>
                 </div>
               )}
@@ -581,29 +602,66 @@ function downloadStudyPlan() {
 
             </div>
 
-            <div className="readiness-card">
+           <div className="readiness-card">
 
-              <div className="readiness-icon">
-                🎯
-              </div>
+  <div className="readiness-icon">
+    🎯
+  </div>
 
-              <div className="readiness-content">
+  <div className="readiness-content">
 
-                <h3>
-                  Exam Readiness Score
-                </h3>
+    <h3>
+      Exam Readiness Score
+    </h3>
 
-                <div className="readiness-score">
-                  {readiness}%
-                </div>
+    <div className="readiness-score">
+      {readiness}%
+    </div>
 
-                <p>
-                  {getReadinessMessage(readiness)}
-                </p>
+    <p>
+      {getReadinessMessage(readiness)}
+    </p>
 
-              </div>
+    <div className="readiness-explanation">
 
-            </div>
+      <strong>
+        📌 What does this score mean?
+      </strong>
+
+      <p>
+        Your Exam Readiness Score shows how prepared
+        you currently are based on your subject performance.
+        A higher score means you are more consistent across
+        your subjects.
+      </p>
+
+      <div className="readiness-levels">
+
+        <div>
+          <span>🟢</span>
+          <strong>80–100%</strong>
+          <small>Well Prepared</small>
+        </div>
+
+        <div>
+          <span>🟡</span>
+          <strong>60–79%</strong>
+          <small>Needs More Practice</small>
+        </div>
+
+        <div>
+          <span>🔴</span>
+          <strong>Below 60%</strong>
+          <small>Needs Improvement</small>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
 
             <div className="result-section">
 
@@ -694,17 +752,40 @@ function downloadStudyPlan() {
                     🎯 Areas That Need Improvement
                   </h3>
 
-                  {result.weakSubjects.map(
-                    (subject, index) => (
-                      <div
-                        className="subject"
-                        key={index}
-                      >
-                        <span>{subject}</span>
-                        <span>Focus More</span>
-                      </div>
-                    )
-                  )}
+                 {result.weakSubjects.map(
+  (subject, index) => {
+
+    const submittedSubject =
+      result.submittedSubjects?.find(
+        item => item.subject === subject
+      )
+
+    const score = Number(
+      submittedSubject?.score || 0
+    )
+
+    let priority = '🟡 Low Priority'
+
+    if (score < 50) {
+      priority = '🔴 High Priority'
+    } else if (score < 70) {
+      priority = '🟠 Medium Priority'
+    }
+
+    return (
+      <div
+        className="subject"
+        key={index}
+      >
+        <span>{subject}</span>
+
+        <span>
+          {priority}
+        </span>
+      </div>
+    )
+  }
+)}
 
                 </div>
               )}
@@ -799,8 +880,26 @@ function downloadStudyPlan() {
       <div className="plan-goal">
         🎯
         <div>
-          <strong>Your Goal</strong>
-          <span>Improve weak subjects & reach your target score</span>
+         <strong>Your Goal</strong>
+
+<span>
+  {result.submittedSubjects &&
+  result.submittedSubjects.length > 0
+    ? (() => {
+        const weakest = [...result.submittedSubjects].sort(
+          (a, b) => Number(a.score) - Number(b.score)
+        )[0]
+
+        const currentScore = Number(weakest.score)
+        const targetScore = Math.min(
+          95,
+          currentScore + 20
+        )
+
+        return `${weakest.subject}: ${currentScore}% → ${targetScore}%`
+      })()
+    : 'Improve weak subjects & reach your target score'}
+</span>
         </div>
       </div>
     </div>
@@ -881,6 +980,63 @@ function downloadStudyPlan() {
   'Every small improvement matters. Stay consistent and keep learning.'}
         </p>
       </div>
+   </div>
+
+    <div className="study-resources">
+
+      <h3>🔎 Recommended Study Resources</h3>
+
+      <p className="resources-subtitle">
+        Helpful resources based on your improvement areas
+      </p>
+
+      {result.studyResources &&
+        result.studyResources.length > 0 ? (
+
+        <div className="resources-list">
+
+          {result.studyResources.map((resource, index) => (
+
+            <a
+              key={index}
+              href={resource.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="resource-card"
+            >
+
+              <div className="resource-icon">
+                📚
+              </div>
+
+              <div className="resource-info">
+
+                <h4>{resource.title}</h4>
+
+                <span>
+                  {resource.source || 'Online Resource'}
+                </span>
+
+              </div>
+
+              <div className="resource-arrow">
+                ↗
+              </div>
+
+            </a>
+
+          ))}
+
+        </div>
+
+      ) : (
+
+        <p className="no-resources">
+          No online study resources available yet.
+        </p>
+
+      )}
+
     </div>
 
   </div>
